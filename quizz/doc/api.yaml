@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Quizz
+  version: 1.0.0
+servers:
+  - url: http://localhost:4010
+    description: To access by your local machine
+  - url: http://mock:4010
+    description: To access in the Docker app container
+paths:
+  /questions:
+    get:
+      description: List all questions
+      responses:
+        '200':
+          description: Array of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+              example:
+                - uid: eb288b92-4998-4c10-8fd6-e056ccda6e49
+                  text: Inside which HTML element do we put the JavaScript?
+                  answers:
+                    - uid: daa79015-ec3e-4b3b-9ffe-e29c52e8fb29
+                      text: <javascript>
+                      isCorrect: false
+                    - uid: b773425d-2590-4353-b649-8b228427ee5d
+                      text: <scripting>
+                      isCorrect: false
+                    - uid: 0c684798-ef36-4cf1-b57b-2b19ac4e9d69
+                      text: <js>
+                      isCorrect: false
+                    - uid: 40f41731-9db7-4fc5-b802-cf6bea40aa2a
+                      text: <script>
+                      isCorrect: true
+                - uid: 6261a4fc-0bad-4d0d-ae4a-2c6a25503201
+                  text: What is the correct syntax for referring to an external script called "xxx.js"?
+                  answers:
+                    - uid: 5c499583-1f97-40dc-acca-603c43ef1f6f
+                      text: <script href="xxx.js">
+                      isCorrect: false
+                    - uid: b773425d-2590-4353-b649-8b228427ee5d
+                      text: <script src="xxx.js">
+                      isCorrect: true
+                    - uid: 721ff090-654d-4c5e-8947-190d53796c67
+                      text: <script name="xxx.js">
+                      isCorrect: false
+                - uid: 48d823d4-ac75-4946-a15c-1b98d23dbb31
+                  text: How do you write "Hello World" in an alert box?
+                  answers:
+                    - uid: b113671a-5f13-4080-b86d-164a7b03c245
+                      text: box("Hello World");
+                      isCorrect: false
+                    - uid: 14913fb5-44b8-4aab-9731-156e49355893
+                      text: msg("Hello World");
+                      isCorrect: false
+                    - uid: 7b776d34-4fcc-4f7d-96b5-5c87c5b8434d
+                      text: alert("Hello World");
+                      isCorrect: true
+                    - uid: 13caf531-9092-4987-8aae-ac27718f05fb
+                      text: console.log("Hello World");
+                      isCorrect: true
+  /score:
+    post:
+      description: Save the user's score
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                score:
+                  type:
+                    integer
+      responses:
+        '201':
+          description: Score saved
+components:
+  schemas:
+    Answer:
+      properties:
+        uid:
+          type: string
+        text:
+          type: string
+        isCorrect:
+          type: boolean
+    Question:
+      properties:
+        uid:
+          type: string
+        text:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Answer'
+

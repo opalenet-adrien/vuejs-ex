@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: app
+    volumes:
+      - ./app/:/app/
+    ports:
+      - '8080:8080'
+    tty: true
+  mock:
+    image: stoplight/prism:4
+    volumes:
+      - ./doc:/tmp:cached
+    restart:
+      on-failure
+    ports:
+      - '4010:4010'
+    command: mock --host 0.0.0.0 /tmp/api.yaml
