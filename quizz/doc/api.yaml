@@ -7,6 +7,8 @@ servers:
     description: To access by your local machine
   - url: http://mock:4010
     description: To access in the Docker app container
+  - url: http://6363ce7f7b209ece0f37f646.mockapi.io
+    description: Mock server provided by a third service
 paths:
   /questions:
     get:
